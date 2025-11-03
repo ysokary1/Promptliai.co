@@ -5,8 +5,8 @@ import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'Promptli Ai | Never Miss a Lead, Never Miss a Buyer',
+  description: 'Transform your business with AI-powered automation, chatbots, and intelligent solutions that work 24/7',
   generator: 'v0.app',
 }
 

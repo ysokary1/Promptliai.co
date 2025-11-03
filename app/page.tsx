@@ -436,8 +436,8 @@ export default function HomePage() {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 bg-transparent">
-                Call (555) 123-4567
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 bg-transparent" asChild>
+                <a href="tel:+447917066682">Call +44 7917 066682</a>
               </Button>
             </div>
           </div>
@@ -487,10 +487,8 @@ export default function HomePage() {
               <ul className="space-y-3">
                 {[
                   "AI Chatbots & Virtual Assistants",
-                  "Workflow Automation",
                   "AI Integration Services",
                   "Smart Analytics & Insights",
-                  "Custom AI Development",
                 ].map((service) => (
                   <li key={service}>
                     <a
@@ -546,8 +544,8 @@ export default function HomePage() {
                   <div className="p-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
                     <Phone className="h-4 w-4" />
                   </div>
-                  <a href="tel:+15551234567" className="hover:text-white transition-colors duration-300">
-                    (555) 123-4567
+                  <a href="tel:+447917066682" className="hover:text-white transition-colors duration-300">
+                    +44 7917 066682
                   </a>
                 </div>
 
