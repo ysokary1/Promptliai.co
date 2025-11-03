@@ -74,6 +74,7 @@
     "recharts": "2.15.4",
     "sanity": "^4.13.0",
     "sonner": "^1.7.4",
+    "styled-components": "^6.1.19",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "three": "0.180.0",
