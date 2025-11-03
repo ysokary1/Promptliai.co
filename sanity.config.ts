@@ -7,6 +7,7 @@ import { apiVersion, dataset, projectId } from './sanity/env'
 export default defineConfig({
   name: 'default',
   title: 'Promptli AI CMS',
+  basePath: '/studio',
 
   projectId,
   dataset,
