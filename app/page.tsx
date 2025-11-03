@@ -24,8 +24,10 @@ import {
   Twitter,
   Facebook,
 } from "lucide-react"
+import { getPageData } from "@/lib/sanity.data"
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { siteSettings, heroSection, services, footerServices, pricingPlans } = await getPageData()
   return (
     <div className="min-h-screen bg-black">
       {/* Navigation Component */}
@@ -41,17 +43,16 @@ export default function HomePage() {
               {/* Left content */}
               <div className="flex-1 p-8 relative z-10 flex flex-col justify-center">
                 <h1 className="text-4xl md:text-5xl font-bold text-white bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text">
-                  Results and Costs Reduced by AI
+                  {heroSection.heading}
                 </h1>
                 <p className="mt-4 text-neutral-300 max-w-lg">
-                  We help businesses automate workflows, build intelligent chatbots, and integrate AI agents that work
-                  24/7 to boost productivity and drive growth.
+                  {heroSection.subheading}
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 mt-8">
                   <Button size="lg" className="bg-white text-black hover:bg-gray-100" asChild>
-                    <a href="mailto:director@promptliai.co">
-                      Book Free Consultation
+                    <a href={`mailto:${siteSettings.email}`}>
+                      {heroSection.primaryButtonText}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
@@ -60,18 +61,18 @@ export default function HomePage() {
                     variant="outline"
                     className="border-neutral-600 text-neutral-300 hover:bg-neutral-800 bg-transparent"
                   >
-                    View Case Studies
+                    {heroSection.secondaryButtonText}
                   </Button>
                 </div>
 
                 <div className="flex items-center gap-8 text-sm text-neutral-400 mt-6">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400" />
-                    <span>No Setup Fees</span>
+                    <span>{heroSection.badge1}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400" />
-                    <span>30-Day ROI Guarantee</span>
+                    <span>{heroSection.badge2}</span>
                   </div>
                 </div>
               </div>
@@ -292,68 +293,7 @@ export default function HomePage() {
           <Pricing
             title="Choose Your AI Transformation Plan"
             description="Flexible pricing designed to scale with your business growth\nAll plans include setup, training, and 30-day money-back guarantee"
-            plans={[
-              {
-                name: "Starter",
-                price: "997",
-                yearlyPrice: "797",
-                period: "month",
-                features: [
-                  "AI Chatbot for customer support",
-                  "Basic workflow automation (3 processes)",
-                  "Email integration",
-                  "Standard analytics dashboard",
-                  "Email support",
-                  "30-day money-back guarantee",
-                ],
-                description: "Perfect for small businesses starting their AI journey",
-                buttonText: "Start Free Trial",
-                href: "#contact",
-                isPopular: false,
-              },
-              {
-                name: "Professional",
-                price: "2497",
-                yearlyPrice: "1997",
-                period: "month",
-                features: [
-                  "Advanced AI chatbot with lead qualification",
-                  "Complete workflow automation (10+ processes)",
-                  "CRM & e-commerce integrations",
-                  "Advanced analytics & reporting",
-                  "Priority phone & email support",
-                  "Custom AI training",
-                  "Monthly optimization calls",
-                  "ROI tracking & reporting",
-                ],
-                description: "Ideal for growing businesses ready to scale with AI",
-                buttonText: "Get Started",
-                href: "#contact",
-                isPopular: true,
-              },
-              {
-                name: "Enterprise",
-                price: "4997",
-                yearlyPrice: "3997",
-                period: "month",
-                features: [
-                  "Custom AI development & deployment",
-                  "Unlimited workflow automation",
-                  "Full system integrations",
-                  "Dedicated AI strategist",
-                  "24/7 priority support",
-                  "Advanced security & compliance",
-                  "White-label solutions",
-                  "Quarterly business reviews",
-                  "Custom training & workshops",
-                ],
-                description: "Complete AI transformation for large organizations",
-                buttonText: "Contact Sales",
-                href: "#contact",
-                isPopular: false,
-                isComingSoon: true,
-              },
-            ]}
+            plans={pricingPlans}
           />
         </div>
       </section>
@@ -431,13 +371,13 @@ export default function HomePage() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" variant="secondary" className="bg-white text-black hover:bg-gray-100" asChild>
-                <a href="mailto:director@promptliai.co">
-                  Book Free Consultation
+                <a href={`mailto:${siteSettings.email}`}>
+                  {heroSection.primaryButtonText}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 bg-transparent">
-                Call (555) 123-4567
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 bg-transparent" asChild>
+                <a href={`tel:${siteSettings.phone}`}>Call {siteSettings.phone}</a>
               </Button>
             </div>
           </div>
@@ -453,27 +393,27 @@ export default function HomePage() {
             {/* Company Info */}
             <div className="lg:col-span-1 space-y-6">
               <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-white">AI Agency</h3>
+                <h3 className="text-2xl font-bold text-white">{siteSettings.companyName}</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  Transforming businesses through intelligent automation and cutting-edge AI integration solutions.
+                  {siteSettings.companyDescription}
                 </p>
               </div>
 
               <div className="flex space-x-4">
                 <a
-                  href="#"
+                  href={siteSettings.socialLinks?.linkedin || '#'}
                   className="p-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-300"
                 >
                   <Linkedin className="h-5 w-5" />
                 </a>
                 <a
-                  href="#"
+                  href={siteSettings.socialLinks?.twitter || '#'}
                   className="p-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-300"
                 >
                   <Twitter className="h-5 w-5" />
                 </a>
                 <a
-                  href="#"
+                  href={siteSettings.socialLinks?.facebook || '#'}
                   className="p-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-300"
                 >
                   <Facebook className="h-5 w-5" />
@@ -485,20 +425,14 @@ export default function HomePage() {
             <div className="space-y-6">
               <h4 className="text-lg font-semibold text-white">Services</h4>
               <ul className="space-y-3">
-                {[
-                  "AI Chatbots & Virtual Assistants",
-                  "Workflow Automation",
-                  "AI Integration Services",
-                  "Smart Analytics & Insights",
-                  "Custom AI Development",
-                ].map((service) => (
-                  <li key={service}>
+                {footerServices.map((service) => (
+                  <li key={service._id}>
                     <a
                       href="#services"
                       className="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group"
                     >
                       <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      {service}
+                      {service.name}
                     </a>
                   </li>
                 ))}
@@ -537,8 +471,8 @@ export default function HomePage() {
                   <div className="p-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
                     <Mail className="h-4 w-4" />
                   </div>
-                  <a href="mailto:director@promptliai.co" className="hover:text-white transition-colors duration-300">
-                    director@promptliai.co
+                  <a href={`mailto:${siteSettings.email}`} className="hover:text-white transition-colors duration-300">
+                    {siteSettings.email}
                   </a>
                 </div>
 
@@ -546,8 +480,8 @@ export default function HomePage() {
                   <div className="p-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
                     <Phone className="h-4 w-4" />
                   </div>
-                  <a href="tel:+15551234567" className="hover:text-white transition-colors duration-300">
-                    (555) 123-4567
+                  <a href={`tel:${siteSettings.phone}`} className="hover:text-white transition-colors duration-300">
+                    {siteSettings.phone}
                   </a>
                 </div>
 
@@ -555,7 +489,7 @@ export default function HomePage() {
                   <div className="p-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
                     <MapPin className="h-4 w-4" />
                   </div>
-                  <span>123 AI Street, Tech City</span>
+                  <span>{siteSettings.address}</span>
                 </div>
               </div>
             </div>
@@ -564,7 +498,7 @@ export default function HomePage() {
           {/* Bottom Section */}
           <div className="border-t border-white/10 mt-16 pt-8">
             <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
-              <p className="text-gray-400 text-center lg:text-left">© 2024 AI Agency. All rights reserved.</p>
+              <p className="text-gray-400 text-center lg:text-left">© 2024 {siteSettings.companyName}. All rights reserved.</p>
 
               <div className="flex flex-wrap justify-center lg:justify-end space-x-8">
                 <a href="/privacy" className="text-gray-400 hover:text-white transition-colors duration-300 text-sm">

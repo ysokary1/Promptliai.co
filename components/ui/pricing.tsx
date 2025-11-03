@@ -69,14 +69,17 @@ export function Pricing({
         <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-white">{title}</h2>
       </div>
 
-      <div className="flex justify-center mb-10">
+      <div className="flex justify-center items-center gap-4 mb-10">
+        <span className={`font-semibold transition-colors ${isMonthly ? 'text-white' : 'text-gray-400'}`}>
+          Monthly
+        </span>
         <label className="relative inline-flex items-center cursor-pointer">
           <Label>
             <Switch ref={switchRef as any} checked={!isMonthly} onCheckedChange={handleToggle} className="relative" />
           </Label>
         </label>
-        <span className="ml-2 font-semibold text-white">
-          Annual billing <span className="text-blue-400">(Save 20%)</span>
+        <span className={`font-semibold transition-colors ${!isMonthly ? 'text-white' : 'text-gray-400'}`}>
+          Annual <span className="text-blue-400">(Save 20%)</span>
         </span>
       </div>
 
