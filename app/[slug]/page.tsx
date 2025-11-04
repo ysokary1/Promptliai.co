@@ -10,6 +10,12 @@ interface PageProps {
 
 export async function generateStaticParams() {
   const pages = await getAllPages()
+
+  // Return empty array if Sanity is not configured or no pages exist
+  if (!pages || !Array.isArray(pages)) {
+    return []
+  }
+
   return pages.map((page: any) => ({
     slug: page.slug.current,
   }))
