@@ -124,6 +124,37 @@ export async function getCTASection() {
   )
 }
 
+// Fetch problem solution section
+export async function getProblemSolutionSection() {
+  return client.fetch(
+    `*[_type == "problemSolutionSection" && _id == "problemSolutionSection"][0]{
+      problemTitle,
+      problems,
+      solutionTitle,
+      solutions
+    }`
+  )
+}
+
+// Fetch testimonials section
+export async function getTestimonialsSection() {
+  return client.fetch(
+    `*[_type == "testimonialsSection" && _id == "testimonialsSection"][0]{
+      title,
+      subtitle,
+      isVisible,
+      testimonials[] | order(order asc) {
+        quote,
+        name,
+        title,
+        company,
+        rating,
+        order
+      }
+    }`
+  )
+}
+
 // Fetch page by slug
 export async function getPageBySlug(slug: string) {
   return client.fetch(

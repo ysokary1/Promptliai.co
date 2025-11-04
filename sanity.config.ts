@@ -40,6 +40,13 @@ export default defineConfig({
                   .documentId('heroSection')
               ),
             S.listItem()
+              .title('Problem & Solution Section')
+              .child(
+                S.document()
+                  .schemaType('problemSolutionSection')
+                  .documentId('problemSolutionSection')
+              ),
+            S.listItem()
               .title('Process Section')
               .child(
                 S.document()
@@ -52,6 +59,13 @@ export default defineConfig({
                 S.document()
                   .schemaType('statsSection')
                   .documentId('statsSection')
+              ),
+            S.listItem()
+              .title('Testimonials Section')
+              .child(
+                S.document()
+                  .schemaType('testimonialsSection')
+                  .documentId('testimonialsSection')
               ),
             S.listItem()
               .title('CTA Section')

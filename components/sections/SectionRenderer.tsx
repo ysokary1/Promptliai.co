@@ -5,6 +5,8 @@ import { ServicesSection } from "./ServicesSection"
 import { PricingSection } from "./PricingSection"
 import { CustomContentSection } from "./CustomContentSection"
 import { HeroSection } from "./HeroSection"
+import { ProblemSolutionSection } from "./ProblemSolutionSection"
+import { TestimonialsSection } from "./TestimonialsSection"
 
 interface Section {
   _type: string
@@ -38,11 +40,17 @@ export function SectionRenderer({
           case "heroSection":
             return <HeroSection key={key} {...section} siteSettings={siteSettings} />
 
+          case "problemSolutionSection":
+            return <ProblemSolutionSection key={key} {...section} />
+
           case "processSection":
             return <ProcessSection key={key} {...section} />
 
           case "statsSection":
             return <StatsSection key={key} {...section} />
+
+          case "testimonialsSection":
+            return <TestimonialsSection key={key} {...section} />
 
           case "ctaSection":
             return <CTASection key={key} {...section} />

@@ -7,6 +7,8 @@ import {
   getProcessSection,
   getStatsSection,
   getCTASection,
+  getProblemSolutionSection,
+  getTestimonialsSection,
 } from './sanity.queries'
 
 // Fallback data
@@ -201,6 +203,58 @@ const fallbackCTASection = {
   backgroundStyle: 'gradient',
 }
 
+const fallbackProblemSolutionSection = {
+  problemTitle: 'Still Managing Everything Manually?',
+  problems: [
+    'Spending hours on repetitive tasks that could be automated',
+    "Missing leads because you can't respond to inquiries 24/7",
+    'Struggling to scale operations without hiring more staff',
+    'Losing competitive edge to AI-powered competitors',
+  ],
+  solutionTitle: 'We Build AI Solutions That Work',
+  solutions: [
+    'Custom AI agents that handle customer inquiries instantly',
+    'Workflow automation that saves 20+ hours per week',
+    'Seamless integration with your existing tools and systems',
+    'Proven ROI within 30 days of implementation',
+  ],
+}
+
+const fallbackTestimonialsSection = {
+  title: 'Trusted by Growing Businesses',
+  subtitle: '',
+  isVisible: false,
+  testimonials: [
+    {
+      quote:
+        'The AI chatbot increased our lead conversion by 200% and handles 90% of customer inquiries automatically. ROI was evident within the first month.',
+      name: 'Sarah Johnson',
+      title: 'CEO',
+      company: 'TechStart Solutions',
+      rating: 5,
+      order: 1,
+    },
+    {
+      quote:
+        'Workflow automation saved us 25 hours per week. Our team can now focus on strategic growth instead of repetitive tasks.',
+      name: 'Michael Chen',
+      title: 'Operations Director',
+      company: 'GrowthCorp',
+      rating: 5,
+      order: 2,
+    },
+    {
+      quote:
+        'The AI integration transformed our e-commerce platform. Sales increased by 180% with personalized customer experiences.',
+      name: 'Emily Rodriguez',
+      title: 'Founder',
+      company: 'RetailMax',
+      rating: 5,
+      order: 3,
+    },
+  ],
+}
+
 export async function getPageData() {
   let siteSettings = fallbackSiteSettings
   let heroSection = fallbackHeroSection
@@ -210,6 +264,8 @@ export async function getPageData() {
   let processSection = fallbackProcessSection
   let statsSection = fallbackStatsSection
   let ctaSection = fallbackCTASection
+  let problemSolutionSection = fallbackProblemSolutionSection
+  let testimonialsSection = fallbackTestimonialsSection
 
   try {
     const [
@@ -221,6 +277,8 @@ export async function getPageData() {
       fetchedProcess,
       fetchedStats,
       fetchedCTA,
+      fetchedProblemSolution,
+      fetchedTestimonials,
     ] = await Promise.all([
       getSiteSettings(),
       getHeroSection(),
@@ -230,6 +288,8 @@ export async function getPageData() {
       getProcessSection(),
       getStatsSection(),
       getCTASection(),
+      getProblemSolutionSection(),
+      getTestimonialsSection(),
     ])
 
     if (fetchedSettings) siteSettings = fetchedSettings
@@ -248,6 +308,8 @@ export async function getPageData() {
     if (fetchedProcess) processSection = fetchedProcess
     if (fetchedStats) statsSection = fetchedStats
     if (fetchedCTA) ctaSection = fetchedCTA
+    if (fetchedProblemSolution) problemSolutionSection = fetchedProblemSolution
+    if (fetchedTestimonials) testimonialsSection = fetchedTestimonials
   } catch (error) {
     console.log('Using fallback data:', error)
   }
@@ -275,5 +337,7 @@ export async function getPageData() {
     processSection,
     statsSection,
     ctaSection,
+    problemSolutionSection,
+    testimonialsSection,
   }
 }

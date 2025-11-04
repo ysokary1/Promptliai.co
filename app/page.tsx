@@ -8,6 +8,8 @@ import { BentoGrid, BentoCard } from "@/components/ui/bento-grid"
 import { ProcessSection } from "@/components/sections/ProcessSection"
 import { StatsSection } from "@/components/sections/StatsSection"
 import { CTASection } from "@/components/sections/CTASection"
+import { ProblemSolutionSection } from "@/components/sections/ProblemSolutionSection"
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection"
 import {
   CheckCircle,
   ArrowRight,
@@ -33,6 +35,8 @@ export default async function HomePage() {
     processSection,
     statsSection,
     ctaSection,
+    problemSolutionSection,
+    testimonialsSection,
   } = await getPageData()
   return (
     <div className="min-h-screen bg-black">
@@ -96,55 +100,7 @@ export default async function HomePage() {
       </section>
 
       {/* Problem & Solution Section */}
-      <section className="py-24 bg-black">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">Still Managing Everything Manually?</h2>
-              <div className="space-y-4 text-gray-300">
-                <p className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  Spending hours on repetitive tasks that could be automated
-                </p>
-                <p className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  Missing leads because you can't respond to inquiries 24/7
-                </p>
-                <p className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  Struggling to scale operations without hiring more staff
-                </p>
-                <p className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  Losing competitive edge to AI-powered competitors
-                </p>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-white">We Build AI Solutions That Work</h3>
-              <div className="space-y-4 text-gray-300">
-                <p className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  Custom AI agents that handle customer inquiries instantly
-                </p>
-                <p className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  Workflow automation that saves 20+ hours per week
-                </p>
-                <p className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  Seamless integration with your existing tools and systems
-                </p>
-                <p className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  Proven ROI within 30 days of implementation
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ProblemSolutionSection {...problemSolutionSection} />
 
       {/* Services Section */}
       <section id="services" className="py-24 bg-black">
@@ -188,64 +144,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Social Proof Section */}
-      <section id="testimonials" className="py-24 bg-black hidden">
-        <div className="container mx-auto px-4">
-          <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Trusted by Growing Businesses</h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="bg-black/80 backdrop-blur-sm border-white/10">
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex text-yellow-400">{"★".repeat(5)}</div>
-                  <p className="text-gray-300">
-                    "The AI chatbot increased our lead conversion by 200% and handles 90% of customer inquiries
-                    automatically. ROI was evident within the first month."
-                  </p>
-                  <div>
-                    <p className="font-semibold text-white">Sarah Johnson</p>
-                    <p className="text-sm text-gray-400">CEO, TechStart Solutions</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-black/80 backdrop-blur-sm border-white/10">
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex text-yellow-400">{"★".repeat(5)}</div>
-                  <p className="text-gray-300">
-                    "Workflow automation saved us 25 hours per week. Our team can now focus on strategic growth instead
-                    of repetitive tasks."
-                  </p>
-                  <div>
-                    <p className="font-semibold text-white">Michael Chen</p>
-                    <p className="text-sm text-gray-400">Operations Director, GrowthCorp</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-black/80 backdrop-blur-sm border-white/10">
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex text-yellow-400">{"★".repeat(5)}</div>
-                  <p className="text-gray-300">
-                    "The AI integration transformed our e-commerce platform. Sales increased by 180% with personalized
-                    customer experiences."
-                  </p>
-                  <div>
-                    <p className="font-semibold text-white">Emily Rodriguez</p>
-                    <p className="text-sm text-gray-400">Founder, RetailMax</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+      {/* Testimonials Section */}
+      <TestimonialsSection {...testimonialsSection} />
 
       {/* Benefits Section */}
       <StatsSection {...statsSection} />

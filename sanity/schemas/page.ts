@@ -46,12 +46,14 @@ export default defineType({
           type: 'reference',
           to: [
             { type: 'heroSection' },
+            { type: 'problemSolutionSection' },
             { type: 'statsSection' },
             { type: 'processSection' },
+            { type: 'testimonialsSection' },
             { type: 'ctaSection' },
           ],
           options: {
-            filter: '_type in ["heroSection", "statsSection", "processSection", "ctaSection"]',
+            filter: '_type in ["heroSection", "problemSolutionSection", "statsSection", "processSection", "testimonialsSection", "ctaSection"]',
           },
         },
         {
