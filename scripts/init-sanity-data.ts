@@ -24,7 +24,7 @@ const initialData = [
     phone: '+447917066682',
     email: 'director@promptliai.co',
     address: '123 AI Street, Tech City',
-    companyName: 'AI Agency',
+    companyName: 'Promptli AI',
     companyDescription:
       'Transforming businesses through intelligent automation and cutting-edge AI integration solutions.',
     socialLinks: {
@@ -44,6 +44,81 @@ const initialData = [
     secondaryButtonText: 'View Case Studies',
     badge1: 'No Setup Fees',
     badge2: '30-Day ROI Guarantee',
+  },
+  // Process Section
+  {
+    _id: 'processSection',
+    _type: 'processSection',
+    title: 'Simple 3-Step Process',
+    subtitle: 'From consultation to implementation, we make AI adoption seamless',
+    steps: [
+      {
+        title: 'Book a Call',
+        description:
+          'Schedule a free consultation to discuss your business needs and identify automation opportunities',
+        icon: 'calendar',
+        order: 1,
+      },
+      {
+        title: 'AI Strategy',
+        description:
+          'We analyze your workflows and create a custom AI strategy tailored to your specific business goals',
+        icon: 'chart',
+        order: 2,
+      },
+      {
+        title: 'Implementation',
+        description:
+          'Our team builds, tests, and deploys your AI solutions with ongoing support and optimization',
+        icon: 'rocket',
+        order: 3,
+      },
+    ],
+  },
+  // Stats Section
+  {
+    _id: 'statsSection',
+    _type: 'statsSection',
+    title: 'Measurable Results That Matter',
+    subtitle: 'Our clients see immediate impact on their bottom line',
+    stats: [
+      {
+        value: '80%',
+        label: 'Time Saved on Manual Tasks',
+        icon: 'clock',
+        order: 1,
+      },
+      {
+        value: '300%',
+        label: 'Average ROI Within 6 Months',
+        icon: 'dollar-sign',
+        order: 2,
+      },
+      {
+        value: '150%',
+        label: 'Increase in Lead Conversion',
+        icon: 'bar-chart',
+        order: 3,
+      },
+      {
+        value: '24/7',
+        label: 'Automated Customer Support',
+        icon: 'trending-up',
+        order: 4,
+      },
+    ],
+  },
+  // CTA Section
+  {
+    _id: 'ctaSection',
+    _type: 'ctaSection',
+    title: 'Ready to Transform Your Business?',
+    subtitle: 'Join hundreds of companies already using AI to scale their operations',
+    primaryButtonText: 'Get Started Today',
+    primaryButtonLink: '#pricing',
+    secondaryButtonText: 'Schedule a Demo',
+    secondaryButtonLink: '#contact',
+    backgroundStyle: 'gradient',
   },
   // Services
   {
@@ -138,6 +213,143 @@ const initialData = [
     isPopular: false,
     isComingSoon: true,
     order: 3,
+  },
+  // Legal Pages
+  {
+    _type: 'legalPage',
+    title: 'Privacy Policy',
+    slug: { _type: 'slug', current: 'privacy' },
+    lastUpdated: '2024-12-01',
+    effectiveDate: '2024-01-01',
+    introduction:
+      'We take your privacy seriously. This policy outlines how we collect, use, and protect your personal information.',
+    content: [
+      {
+        _type: 'block',
+        style: 'h2',
+        children: [{ _type: 'span', text: 'Information We Collect', marks: [] }],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        children: [
+          {
+            _type: 'span',
+            text: 'We collect information you provide directly to us, such as when you create an account, request our services, or contact us for support.',
+            marks: [],
+          },
+        ],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        listItem: 'bullet',
+        children: [
+          { _type: 'span', text: 'Contact information (name, email, phone number)', marks: [] },
+        ],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        listItem: 'bullet',
+        children: [{ _type: 'span', text: 'Business information and requirements', marks: [] }],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        listItem: 'bullet',
+        children: [{ _type: 'span', text: 'Usage data and analytics', marks: [] }],
+      },
+      {
+        _type: 'block',
+        style: 'h2',
+        children: [{ _type: 'span', text: 'How We Use Your Information', marks: [] }],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        children: [{ _type: 'span', text: 'We use the information we collect to:', marks: [] }],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        listItem: 'bullet',
+        children: [{ _type: 'span', text: 'Provide and improve our AI services', marks: [] }],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        listItem: 'bullet',
+        children: [{ _type: 'span', text: 'Communicate with you about our services', marks: [] }],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        listItem: 'bullet',
+        children: [
+          { _type: 'span', text: 'Analyze usage patterns and optimize performance', marks: [] },
+        ],
+      },
+    ],
+    contactEmail: 'director@promptliai.co',
+  },
+  {
+    _type: 'legalPage',
+    title: 'Terms of Service',
+    slug: { _type: 'slug', current: 'terms' },
+    lastUpdated: '2024-12-01',
+    effectiveDate: '2024-01-01',
+    introduction:
+      'By accessing and using our AI services, you accept and agree to be bound by the terms and provision of this agreement.',
+    content: [
+      {
+        _type: 'block',
+        style: 'h2',
+        children: [{ _type: 'span', text: 'Service Description', marks: [] }],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        children: [
+          {
+            _type: 'span',
+            text: 'Promptli AI provides artificial intelligence solutions including AI chatbots, workflow automation, and custom AI integrations.',
+            marks: [],
+          },
+        ],
+      },
+      {
+        _type: 'block',
+        style: 'h2',
+        children: [{ _type: 'span', text: 'User Responsibilities', marks: [] }],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        children: [{ _type: 'span', text: 'You agree to:', marks: [] }],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        listItem: 'bullet',
+        children: [{ _type: 'span', text: 'Provide accurate and complete information', marks: [] }],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        listItem: 'bullet',
+        children: [
+          { _type: 'span', text: 'Use our services in compliance with applicable laws', marks: [] },
+        ],
+      },
+      {
+        _type: 'block',
+        style: 'normal',
+        listItem: 'bullet',
+        children: [{ _type: 'span', text: 'Not interfere with or disrupt our services', marks: [] }],
+      },
+    ],
+    contactEmail: 'director@promptliai.co',
   },
 ]
 

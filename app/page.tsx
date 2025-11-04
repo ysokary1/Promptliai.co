@@ -2,18 +2,15 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Spotlight } from "@/components/ui/spotlight"
 import { SplineScene } from "@/components/ui/spline-scene"
-import AnimatedGradientBackground from "@/components/ui/animated-gradient-background"
-import { SparklesCore } from "@/components/ui/sparkles"
 import { Navbar } from "@/components/ui/navbar"
 import { Pricing } from "@/components/ui/pricing"
 import { BentoGrid, BentoCard } from "@/components/ui/bento-grid"
+import { ProcessSection } from "@/components/sections/ProcessSection"
+import { StatsSection } from "@/components/sections/StatsSection"
+import { CTASection } from "@/components/sections/CTASection"
 import {
   CheckCircle,
   ArrowRight,
-  TrendingUp,
-  Clock,
-  DollarSign,
-  BarChart3,
   Bot,
   Brain,
   Cog,
@@ -27,7 +24,16 @@ import {
 import { getPageData } from "@/lib/sanity.data"
 
 export default async function HomePage() {
-  const { siteSettings, heroSection, services, footerServices, pricingPlans } = await getPageData()
+  const {
+    siteSettings,
+    heroSection,
+    services,
+    footerServices,
+    pricingPlans,
+    processSection,
+    statsSection,
+    ctaSection,
+  } = await getPageData()
   return (
     <div className="min-h-screen bg-black">
       {/* Navigation Component */}
@@ -242,50 +248,7 @@ export default async function HomePage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-24 bg-black">
-        <div className="container mx-auto px-4">
-          <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Measurable Results That Matter</h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Our clients see immediate impact on their bottom line
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center space-y-4">
-              <div className="h-16 w-16 bg-green-900/40 rounded-full flex items-center justify-center mx-auto">
-                <Clock className="h-8 w-8 text-green-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">80%</h3>
-              <p className="text-gray-300">Time Saved on Manual Tasks</p>
-            </div>
-
-            <div className="text-center space-y-4">
-              <div className="h-16 w-16 bg-blue-900/40 rounded-full flex items-center justify-center mx-auto">
-                <DollarSign className="h-8 w-8 text-blue-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">300%</h3>
-              <p className="text-gray-300">Average ROI Within 6 Months</p>
-            </div>
-
-            <div className="text-center space-y-4">
-              <div className="h-16 w-16 bg-purple-900/40 rounded-full flex items-center justify-center mx-auto">
-                <BarChart3 className="h-8 w-8 text-purple-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">150%</h3>
-              <p className="text-gray-300">Increase in Lead Conversion</p>
-            </div>
-
-            <div className="text-center space-y-4">
-              <div className="h-16 w-16 bg-orange-900/40 rounded-full flex items-center justify-center mx-auto">
-                <TrendingUp className="h-8 w-8 text-orange-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">24/7</h3>
-              <p className="text-gray-300">Automated Customer Support</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <StatsSection {...statsSection} />
 
       {/* Pricing Section */}
       <section className="py-24 bg-black flex justify-center">
@@ -299,90 +262,10 @@ export default async function HomePage() {
       </section>
 
       {/* Process Section */}
-      <section className="py-24 bg-black">
-        <div className="container mx-auto px-4">
-          <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Simple 3-Step Process</h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              From consultation to implementation, we make AI adoption seamless
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center space-y-6">
-              <div className="h-20 w-20 bg-white text-black rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
-                1
-              </div>
-              <h3 className="text-xl font-bold text-white">Book a Call</h3>
-              <p className="text-gray-300">
-                Schedule a free consultation to discuss your business needs and identify automation opportunities
-              </p>
-            </div>
-
-            <div className="text-center space-y-6">
-              <div className="h-20 w-20 bg-white text-black rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
-                2
-              </div>
-              <h3 className="text-xl font-bold text-white">AI Strategy</h3>
-              <p className="text-gray-300">
-                We analyze your workflows and create a custom AI strategy tailored to your specific business goals
-              </p>
-            </div>
-
-            <div className="text-center space-y-6">
-              <div className="h-20 w-20 bg-white text-black rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
-                3
-              </div>
-              <h3 className="text-xl font-bold text-white">Implementation</h3>
-              <p className="text-gray-300">
-                Our team builds, tests, and deploys your AI solutions with ongoing support and optimization
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ProcessSection {...processSection} />
 
       {/* CTA Section */}
-      <section className="relative py-24 overflow-hidden">
-        <AnimatedGradientBackground
-          Breathing={true}
-          gradientColors={["#0A0A0A", "#2979FF", "#FF80AB", "#FF6D00", "#FFD600", "#00E676", "#3D5AFE"]}
-          gradientStops={[35, 50, 60, 70, 80, 90, 100]}
-        />
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <div className="relative h-32 w-full flex flex-col items-center justify-center">
-              <div className="w-full absolute inset-0">
-                <SparklesCore
-                  id="ctasparticles"
-                  background="transparent"
-                  minSize={0.6}
-                  maxSize={1.4}
-                  particleDensity={100}
-                  className="w-full h-full"
-                  particleColor="#FFFFFF"
-                  speed={0.8}
-                />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 relative z-20 text-balance">
-                Ready to cut costs with AI?
-              </h2>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" className="bg-white text-black hover:bg-gray-100" asChild>
-                <a href={`mailto:${siteSettings.email}`}>
-                  {heroSection.primaryButtonText}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 bg-transparent" asChild>
-                <a href={`tel:${siteSettings.phone}`}>Call {siteSettings.phone}</a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection {...ctaSection} />
 
       {/* Footer */}
       <footer id="contact" className="relative py-20 bg-black border-t border-white/10 overflow-hidden">

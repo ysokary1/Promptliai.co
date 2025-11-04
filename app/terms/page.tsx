@@ -2,8 +2,83 @@ import { Navbar } from "@/components/ui/navbar"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { getLegalPageBySlug } from "@/lib/sanity.queries"
+import { PortableText } from "@portabletext/react"
 
-export default function TermsOfService() {
+const portableTextComponents = {
+  block: {
+    h1: ({ children }: any) => <h1 className="text-4xl font-bold text-white mb-6">{children}</h1>,
+    h2: ({ children }: any) => <h2 className="text-2xl font-bold text-white mb-4">{children}</h2>,
+    h3: ({ children }: any) => <h3 className="text-xl font-bold text-white mb-3">{children}</h3>,
+    h4: ({ children }: any) => <h4 className="text-lg font-bold text-white mb-2">{children}</h4>,
+    normal: ({ children }: any) => <p className="mb-4">{children}</p>,
+    blockquote: ({ children }: any) => (
+      <blockquote className="border-l-4 border-white/20 pl-6 py-2 text-gray-400 italic mb-4">
+        {children}
+      </blockquote>
+    ),
+  },
+  list: {
+    bullet: ({ children }: any) => <ul className="list-disc pl-6 space-y-2 mb-4">{children}</ul>,
+    number: ({ children }: any) => <ol className="list-decimal pl-6 space-y-2 mb-4">{children}</ol>,
+  },
+  marks: {
+    strong: ({ children }: any) => <strong className="font-bold text-white">{children}</strong>,
+    em: ({ children }: any) => <em className="italic">{children}</em>,
+    code: ({ children }: any) => (
+      <code className="bg-white/10 px-2 py-1 rounded text-sm font-mono">{children}</code>
+    ),
+    link: ({ children, value }: any) => {
+      const target = value?.blank ? "_blank" : undefined
+      const rel = value?.blank ? "noopener noreferrer" : undefined
+      return (
+        <a
+          href={value?.href}
+          target={target}
+          rel={rel}
+          className="text-blue-400 hover:text-blue-300 underline"
+        >
+          {children}
+        </a>
+      )
+    },
+  },
+}
+
+const fallbackContent = {
+  title: "Terms of Service",
+  lastUpdated: "2024-12-01",
+  introduction: "By accessing and using our AI services, you accept and agree to be bound by the terms and provision of this agreement.",
+  content: [
+    {
+      _type: "block",
+      style: "h2",
+      children: [{ _type: "span", text: "Service Description" }],
+    },
+    {
+      _type: "block",
+      style: "normal",
+      children: [
+        {
+          _type: "span",
+          text: "Promptli AI provides artificial intelligence solutions including AI chatbots, workflow automation, and custom AI integrations.",
+        },
+      ],
+    },
+  ],
+  contactEmail: "director@promptliai.co",
+}
+
+export default async function TermsOfService() {
+  let pageData
+  try {
+    pageData = await getLegalPageBySlug("terms")
+  } catch (error) {
+    console.error("Error fetching terms page:", error)
+  }
+
+  const data = pageData || fallbackContent
+
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
@@ -17,62 +92,29 @@ export default function TermsOfService() {
                 Back to Home
               </Button>
             </Link>
-            <h1 className="text-4xl font-bold text-white mb-4">Terms of Service</h1>
-            <p className="text-gray-400">Last updated: December 2024</p>
+            <h1 className="text-4xl font-bold text-white mb-4">{data.title}</h1>
+            <p className="text-gray-400">
+              Last updated: {data.lastUpdated ? new Date(data.lastUpdated).toLocaleDateString() : "December 2024"}
+            </p>
           </div>
 
           <div className="prose prose-invert max-w-none">
+            {data.introduction && (
+              <div className="text-gray-300 mb-8 text-lg">{data.introduction}</div>
+            )}
             <div className="space-y-8 text-gray-300">
-              <section>
-                <h2 className="text-2xl font-bold text-white mb-4">Acceptance of Terms</h2>
-                <p>
-                  By accessing and using our AI services, you accept and agree to be bound by the terms and provision of
-                  this agreement.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-white mb-4">Service Description</h2>
-                <p className="mb-4">
-                  AI Agency provides artificial intelligence solutions including but not limited to:
-                </p>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>AI chatbot development and deployment</li>
-                  <li>Workflow automation systems</li>
-                  <li>AI integration services</li>
-                  <li>Custom AI solution development</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-white mb-4">User Responsibilities</h2>
-                <p className="mb-4">You agree to:</p>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Provide accurate and complete information</li>
-                  <li>Use our services in compliance with applicable laws</li>
-                  <li>Not interfere with or disrupt our services</li>
-                  <li>Maintain the confidentiality of your account credentials</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-white mb-4">Limitation of Liability</h2>
-                <p>
-                  Our liability for any claims arising from the use of our services shall not exceed the amount paid by
-                  you for the specific service giving rise to the claim.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-white mb-4">Contact Information</h2>
+              <PortableText value={data.content} components={portableTextComponents} />
+            </div>
+            {data.contactEmail && (
+              <div className="mt-8 pt-8 border-t border-white/10">
                 <p>
                   For questions about these Terms of Service, contact us at{" "}
-                  <a href="mailto:legal@aiagency.com" className="text-blue-400 hover:text-blue-300">
-                    legal@aiagency.com
+                  <a href={`mailto:${data.contactEmail}`} className="text-blue-400 hover:text-blue-300">
+                    {data.contactEmail}
                   </a>
                 </p>
-              </section>
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

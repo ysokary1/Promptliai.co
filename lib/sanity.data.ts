@@ -4,6 +4,9 @@ import {
   getServices,
   getFooterServices,
   getPricingPlans,
+  getProcessSection,
+  getStatsSection,
+  getCTASection,
 } from './sanity.queries'
 
 // Fallback data
@@ -132,22 +135,102 @@ const fallbackPricingPlans = [
   },
 ]
 
+const fallbackProcessSection = {
+  title: 'Simple 3-Step Process',
+  subtitle: 'From consultation to implementation, we make AI adoption seamless',
+  steps: [
+    {
+      title: 'Book a Call',
+      description: 'Schedule a free consultation to discuss your business needs and identify automation opportunities',
+      icon: 'calendar',
+      order: 1,
+    },
+    {
+      title: 'AI Strategy',
+      description: 'We analyze your workflows and create a custom AI strategy tailored to your specific business goals',
+      icon: 'chart',
+      order: 2,
+    },
+    {
+      title: 'Implementation',
+      description: 'Our team builds, tests, and deploys your AI solutions with ongoing support and optimization',
+      icon: 'rocket',
+      order: 3,
+    },
+  ],
+}
+
+const fallbackStatsSection = {
+  title: 'Measurable Results That Matter',
+  subtitle: 'Our clients see immediate impact on their bottom line',
+  stats: [
+    {
+      value: '80%',
+      label: 'Time Saved on Manual Tasks',
+      icon: 'clock',
+      order: 1,
+    },
+    {
+      value: '300%',
+      label: 'Average ROI Within 6 Months',
+      icon: 'dollar-sign',
+      order: 2,
+    },
+    {
+      value: '150%',
+      label: 'Increase in Lead Conversion',
+      icon: 'bar-chart',
+      order: 3,
+    },
+    {
+      value: '24/7',
+      label: 'Automated Customer Support',
+      icon: 'trending-up',
+      order: 4,
+    },
+  ],
+}
+
+const fallbackCTASection = {
+  title: 'Ready to Transform Your Business?',
+  subtitle: 'Join hundreds of companies already using AI to scale their operations',
+  primaryButtonText: 'Get Started Today',
+  primaryButtonLink: '#pricing',
+  secondaryButtonText: 'Schedule a Demo',
+  secondaryButtonLink: '#contact',
+  backgroundStyle: 'gradient',
+}
+
 export async function getPageData() {
   let siteSettings = fallbackSiteSettings
   let heroSection = fallbackHeroSection
   let services = fallbackServices
   let footerServices = fallbackServices.filter((s) => s.showInFooter)
   let pricingPlans = fallbackPricingPlans
+  let processSection = fallbackProcessSection
+  let statsSection = fallbackStatsSection
+  let ctaSection = fallbackCTASection
 
   try {
-    const [fetchedSettings, fetchedHero, fetchedServices, fetchedFooterServices, fetchedPricing] =
-      await Promise.all([
-        getSiteSettings(),
-        getHeroSection(),
-        getServices(),
-        getFooterServices(),
-        getPricingPlans(),
-      ])
+    const [
+      fetchedSettings,
+      fetchedHero,
+      fetchedServices,
+      fetchedFooterServices,
+      fetchedPricing,
+      fetchedProcess,
+      fetchedStats,
+      fetchedCTA,
+    ] = await Promise.all([
+      getSiteSettings(),
+      getHeroSection(),
+      getServices(),
+      getFooterServices(),
+      getPricingPlans(),
+      getProcessSection(),
+      getStatsSection(),
+      getCTASection(),
+    ])
 
     if (fetchedSettings) siteSettings = fetchedSettings
     if (fetchedHero) heroSection = fetchedHero
@@ -162,6 +245,9 @@ export async function getPageData() {
         href: '#contact',
       }))
     }
+    if (fetchedProcess) processSection = fetchedProcess
+    if (fetchedStats) statsSection = fetchedStats
+    if (fetchedCTA) ctaSection = fetchedCTA
   } catch (error) {
     console.log('Using fallback data:', error)
   }
@@ -186,5 +272,8 @@ export async function getPageData() {
     services,
     footerServices,
     pricingPlans: transformedPricingPlans,
+    processSection,
+    statsSection,
+    ctaSection,
   }
 }

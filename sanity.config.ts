@@ -17,6 +17,7 @@ export default defineConfig({
         S.list()
           .title('Content')
           .items([
+            // Global Settings
             S.listItem()
               .title('Site Settings')
               .child(
@@ -24,6 +25,13 @@ export default defineConfig({
                   .schemaType('siteSettings')
                   .documentId('siteSettings')
               ),
+            S.divider(),
+
+            // Page Builder
+            S.documentTypeListItem('page').title('Pages'),
+            S.divider(),
+
+            // Content Sections
             S.listItem()
               .title('Hero Section')
               .child(
@@ -31,9 +39,36 @@ export default defineConfig({
                   .schemaType('heroSection')
                   .documentId('heroSection')
               ),
+            S.listItem()
+              .title('Process Section')
+              .child(
+                S.document()
+                  .schemaType('processSection')
+                  .documentId('processSection')
+              ),
+            S.listItem()
+              .title('Stats Section')
+              .child(
+                S.document()
+                  .schemaType('statsSection')
+                  .documentId('statsSection')
+              ),
+            S.listItem()
+              .title('CTA Section')
+              .child(
+                S.document()
+                  .schemaType('ctaSection')
+                  .documentId('ctaSection')
+              ),
             S.divider(),
+
+            // Collections
             S.documentTypeListItem('service').title('Services'),
             S.documentTypeListItem('pricingPlan').title('Pricing Plans'),
+            S.divider(),
+
+            // Legal Pages
+            S.documentTypeListItem('legalPage').title('Legal Pages'),
           ]),
     }),
     visionTool({ defaultApiVersion: apiVersion }),
