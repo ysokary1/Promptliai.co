@@ -1,10 +1,10 @@
-// Data layer for Vercel deployment - reads from JSON file
+// Data layer for Vercel deployment using Next.js API routes
 import fs from 'fs/promises'
 import path from 'path'
 
 const contentPath = path.join(process.cwd(), 'data', 'content.json')
 
-// Fallback data
+// Fallback data in case JSON file is not available
 const fallbackData = {
   siteSettings: {
     title: 'Promptli Ai | Never Miss a Lead, Never Miss a Buyer',

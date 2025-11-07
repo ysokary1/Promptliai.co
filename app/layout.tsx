@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { Analytics } from '@vercel/analytics/next'
-import { getSiteSettings } from '@/lib/api.client'
+import { getSiteSettings } from '@/lib/data'
 import './globals.css'
 
 export async function generateMetadata(): Promise<Metadata> {
