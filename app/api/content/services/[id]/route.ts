@@ -1,17 +1,5 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs/promises'
-import path from 'path'
-
-const contentPath = path.join(process.cwd(), 'data', 'content.json')
-
-async function readContent() {
-  const data = await fs.readFile(contentPath, 'utf-8')
-  return JSON.parse(data)
-}
-
-async function writeContent(content: any) {
-  await fs.writeFile(contentPath, JSON.stringify(content, null, 2), 'utf-8')
-}
+import { getContent, updateServices } from '@/lib/storage'
 
 export async function PUT(
   request: Request,
@@ -20,7 +8,7 @@ export async function PUT(
   try {
     const id = parseInt(params.id)
     const updatedService = await request.json()
-    const content = await readContent()
+    const content: any = await getContent()
 
     const index = content.services.findIndex((s: any) => s.id === id)
     if (index === -1) {
@@ -28,7 +16,11 @@ export async function PUT(
     }
 
     content.services[index] = { ...updatedService, id }
-    await writeContent(content)
+    const success = await updateServices(content.services)
+
+    if (!success) {
+      return NextResponse.json({ error: 'Failed to save service' }, { status: 500 })
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {
@@ -42,10 +34,14 @@ export async function DELETE(
 ) {
   try {
     const id = parseInt(params.id)
-    const content = await readContent()
+    const content: any = await getContent()
 
     content.services = content.services.filter((s: any) => s.id !== id)
-    await writeContent(content)
+    const success = await updateServices(content.services)
+
+    if (!success) {
+      return NextResponse.json({ error: 'Failed to delete service' }, { status: 500 })
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {

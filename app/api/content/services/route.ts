@@ -1,21 +1,9 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs/promises'
-import path from 'path'
-
-const contentPath = path.join(process.cwd(), 'data', 'content.json')
-
-async function readContent() {
-  const data = await fs.readFile(contentPath, 'utf-8')
-  return JSON.parse(data)
-}
-
-async function writeContent(content: any) {
-  await fs.writeFile(contentPath, JSON.stringify(content, null, 2), 'utf-8')
-}
+import { getContent, updateServices } from '@/lib/storage'
 
 export async function GET(request: Request) {
   try {
-    const content = await readContent()
+    const content: any = await getContent()
     const { searchParams } = new URL(request.url)
     const footerOnly = searchParams.get('footer') === 'true'
 
@@ -33,14 +21,18 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const service = await request.json()
-    const content = await readContent()
+    const content: any = await getContent()
 
     // Generate new ID
-    const maxId = content.services.reduce((max: number, s: any) => Math.max(max, s.id), 0)
+    const maxId = content.services.reduce((max: number, s: any) => Math.max(max, s.id || 0), 0)
     service.id = maxId + 1
 
     content.services.push(service)
-    await writeContent(content)
+    const success = await updateServices(content.services)
+
+    if (!success) {
+      return NextResponse.json({ error: 'Failed to save service' }, { status: 500 })
+    }
 
     return NextResponse.json({ success: true, id: service.id })
   } catch (error) {
@@ -51,9 +43,12 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const services = await request.json()
-    const content = await readContent()
-    content.services = services
-    await writeContent(content)
+    const success = await updateServices(services)
+
+    if (!success) {
+      return NextResponse.json({ error: 'Failed to save services' }, { status: 500 })
+    }
+
     return NextResponse.json({ success: true })
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update services' }, { status: 500 })

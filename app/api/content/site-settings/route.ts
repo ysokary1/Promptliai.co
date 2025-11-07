@@ -1,21 +1,9 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs/promises'
-import path from 'path'
-
-const contentPath = path.join(process.cwd(), 'data', 'content.json')
-
-async function readContent() {
-  const data = await fs.readFile(contentPath, 'utf-8')
-  return JSON.parse(data)
-}
-
-async function writeContent(content: any) {
-  await fs.writeFile(contentPath, JSON.stringify(content, null, 2), 'utf-8')
-}
+import { getContent, updateSiteSettings } from '@/lib/storage'
 
 export async function GET() {
   try {
-    const content = await readContent()
+    const content: any = await getContent()
     return NextResponse.json(content.siteSettings)
   } catch (error) {
     return NextResponse.json({ error: 'Failed to read settings' }, { status: 500 })
@@ -25,9 +13,12 @@ export async function GET() {
 export async function PUT(request: Request) {
   try {
     const settings = await request.json()
-    const content = await readContent()
-    content.siteSettings = settings
-    await writeContent(content)
+    const success = await updateSiteSettings(settings)
+
+    if (!success) {
+      return NextResponse.json({ error: 'Failed to save settings' }, { status: 500 })
+    }
+
     return NextResponse.json({ success: true })
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update settings' }, { status: 500 })
