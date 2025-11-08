@@ -24,7 +24,7 @@ import {
   Twitter,
   Facebook,
 } from "lucide-react"
-import { getPageData } from "@/lib/sanity.data"
+import { getPageData } from "@/lib/data"
 
 export default async function HomePage() {
   const { siteSettings, heroSection, services, footerServices, pricingPlans } = await getPageData()

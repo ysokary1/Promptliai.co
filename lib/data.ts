@@ -1,20 +1,16 @@
-import {
-  getSiteSettings,
-  getHeroSection,
-  getServices,
-  getFooterServices,
-  getPricingPlans,
-} from './sanity.queries'
+// Default data for the website
+// This will be moved to database once it's set up
 
-// Fallback data
-const fallbackSiteSettings = {
+import { getSiteSetting } from './db'
+
+export const defaultSiteSettings = {
   title: 'Promptli Ai | Never Miss a Lead, Never Miss a Buyer',
   description:
     'Transform your business with AI-powered automation, chatbots, and intelligent solutions that work 24/7',
   phone: '+447917066682',
   email: 'director@promptliai.co',
   address: '123 AI Street, Tech City',
-  companyName: 'AI Agency',
+  companyName: 'Promptli AI',
   companyDescription:
     'Transforming businesses through intelligent automation and cutting-edge AI integration solutions.',
   socialLinks: {
@@ -24,7 +20,7 @@ const fallbackSiteSettings = {
   },
 }
 
-const fallbackHeroSection = {
+export const defaultHeroSection = {
   heading: 'Results and Costs Reduced by AI',
   subheading:
     'We help businesses automate workflows, build intelligent chatbots, and integrate AI agents that work 24/7 to boost productivity and drive growth.',
@@ -34,7 +30,7 @@ const fallbackHeroSection = {
   badge2: '30-Day ROI Guarantee',
 }
 
-const fallbackServices = [
+export const defaultServices = [
   {
     _id: '1',
     name: 'AI Chatbots & Virtual Assistants',
@@ -64,7 +60,7 @@ const fallbackServices = [
   },
 ]
 
-const fallbackPricingPlans = [
+export const defaultPricingPlans = [
   {
     _id: '1',
     name: 'Starter',
@@ -133,41 +129,29 @@ const fallbackPricingPlans = [
 ]
 
 export async function getPageData() {
-  let siteSettings = fallbackSiteSettings
-  let heroSection = fallbackHeroSection
-  let services = fallbackServices
-  let footerServices = fallbackServices.filter((s) => s.showInFooter)
-  let pricingPlans = fallbackPricingPlans
+  // Fetch from database, fallback to defaults
+  let siteSettings = defaultSiteSettings
+  let heroSection = defaultHeroSection
+  let services = defaultServices
+  let pricingPlansData = defaultPricingPlans
 
   try {
-    const [fetchedSettings, fetchedHero, fetchedServices, fetchedFooterServices, fetchedPricing] =
-      await Promise.all([
-        getSiteSettings(),
-        getHeroSection(),
-        getServices(),
-        getFooterServices(),
-        getPricingPlans(),
-      ])
+    const dbSiteSettings = await getSiteSetting('siteSettings')
+    const dbHeroSection = await getSiteSetting('heroSection')
+    const dbServices = await getSiteSetting('services')
+    const dbPricingPlans = await getSiteSetting('pricingPlans')
 
-    if (fetchedSettings) siteSettings = fetchedSettings
-    if (fetchedHero) heroSection = fetchedHero
-    if (fetchedServices && fetchedServices.length > 0) services = fetchedServices
-    if (fetchedFooterServices && fetchedFooterServices.length > 0)
-      footerServices = fetchedFooterServices
-    if (fetchedPricing && fetchedPricing.length > 0) {
-      pricingPlans = fetchedPricing.map((plan: any) => ({
-        ...plan,
-        price: String(plan.monthlyPrice),
-        yearlyPrice: String(plan.yearlyPrice),
-        href: '#contact',
-      }))
-    }
+    if (dbSiteSettings) siteSettings = dbSiteSettings
+    if (dbHeroSection) heroSection = dbHeroSection
+    if (dbServices) services = dbServices
+    if (dbPricingPlans) pricingPlansData = dbPricingPlans
   } catch (error) {
-    console.log('Using fallback data:', error)
+    console.log('Using default data, database not available:', error)
   }
 
-  // Transform pricing plans to match the expected format
-  const transformedPricingPlans = pricingPlans.map((plan) => ({
+  const footerServices = services.filter((s: any) => s.showInFooter)
+
+  const pricingPlans = pricingPlansData.map((plan: any) => ({
     name: plan.name,
     price: String(plan.monthlyPrice),
     yearlyPrice: String(plan.yearlyPrice),
@@ -185,6 +169,6 @@ export async function getPageData() {
     heroSection,
     services,
     footerServices,
-    pricingPlans: transformedPricingPlans,
+    pricingPlans,
   }
 }
