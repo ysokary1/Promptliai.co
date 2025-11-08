@@ -1,21 +1,43 @@
-// Storage layer using Vercel KV (Redis)
-import { kv } from '@vercel/kv'
+// Storage layer using Vercel KV (Redis) with JSON fallback
 import fallbackContent from '@/data/content.json'
 
 const CONTENT_KEY = 'website:content'
 
+// Check if KV is available
+const isKVAvailable = process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN
+
+// Lazy load KV only if available
+let kv: any = null
+async function getKV() {
+  if (!isKVAvailable) {
+    return null
+  }
+  if (!kv) {
+    const { kv: kvClient } = await import('@vercel/kv')
+    kv = kvClient
+  }
+  return kv
+}
+
 // Get all content
 export async function getContent() {
   try {
-    const content = await kv.get(CONTENT_KEY)
+    const kvClient = await getKV()
 
-    // If no content in KV, use fallback and initialize KV
-    if (!content) {
-      await kv.set(CONTENT_KEY, fallbackContent)
-      return fallbackContent
+    if (kvClient) {
+      const content = await kvClient.get(CONTENT_KEY)
+
+      // If no content in KV, use fallback and initialize KV
+      if (!content) {
+        await kvClient.set(CONTENT_KEY, fallbackContent)
+        return fallbackContent
+      }
+
+      return content
     }
 
-    return content
+    // If KV not available, use fallback
+    return fallbackContent
   } catch (error) {
     console.error('Error fetching from KV:', error)
     return fallbackContent
@@ -25,8 +47,15 @@ export async function getContent() {
 // Update all content
 export async function setContent(content: any) {
   try {
-    await kv.set(CONTENT_KEY, content)
-    return true
+    const kvClient = await getKV()
+
+    if (kvClient) {
+      await kvClient.set(CONTENT_KEY, content)
+      return true
+    }
+
+    console.warn('KV not available - content not persisted')
+    return false
   } catch (error) {
     console.error('Error saving to KV:', error)
     return false
