@@ -118,11 +118,20 @@ export async function updateSiteSetting(key: string, value: any) {
 }
 
 // Page operations
-export async function getPage(slug: string) {
+export async function getPage(slug: string, includeUnpublished = false) {
   try {
-    const { rows } = await sql`
-      SELECT * FROM pages WHERE slug = ${slug} AND is_published = true LIMIT 1
-    `
+    let rows
+    if (includeUnpublished) {
+      const result = await sql`
+        SELECT * FROM pages WHERE slug = ${slug} LIMIT 1
+      `
+      rows = result.rows
+    } else {
+      const result = await sql`
+        SELECT * FROM pages WHERE slug = ${slug} AND is_published = true LIMIT 1
+      `
+      rows = result.rows
+    }
     return rows[0]
   } catch (error) {
     console.error('Error fetching page:', error)

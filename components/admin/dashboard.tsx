@@ -6,10 +6,11 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ContentEditor } from './content-editor'
+import { PagesManager } from './pages-manager'
 import { toast } from 'sonner'
 
 export function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState('hero')
+  const [activeTab, setActiveTab] = useState('pages')
   const [isInitialized, setIsInitialized] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -83,12 +84,17 @@ export function AdminDashboard() {
       {/* Main Content */}
       <div className="p-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="grid w-full grid-cols-4 lg:w-[600px]">
+          <TabsList className="grid w-full grid-cols-5 lg:w-[750px]">
+            <TabsTrigger value="pages">Pages</TabsTrigger>
             <TabsTrigger value="hero">Hero Section</TabsTrigger>
             <TabsTrigger value="services">Services</TabsTrigger>
             <TabsTrigger value="pricing">Pricing</TabsTrigger>
-            <TabsTrigger value="settings">Site Settings</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="pages">
+            <PagesManager />
+          </TabsContent>
 
           <TabsContent value="hero">
             <Card>
