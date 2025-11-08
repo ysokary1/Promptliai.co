@@ -2,6 +2,16 @@ import { sql } from '@vercel/postgres'
 
 export { sql }
 
+// Check if database is initialized
+export async function isDatabaseInitialized() {
+  try {
+    await sql`SELECT 1 FROM site_settings LIMIT 1`
+    return true
+  } catch (error) {
+    return false
+  }
+}
+
 // Initialize database tables
 export async function initDatabase() {
   try {

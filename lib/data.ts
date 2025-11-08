@@ -1,7 +1,7 @@
 // Default data for the website
 // This will be moved to database once it's set up
 
-import { getSiteSetting } from './db'
+import { getSiteSetting, isDatabaseInitialized } from './db'
 
 export const defaultSiteSettings = {
   title: 'Promptli Ai | Never Miss a Lead, Never Miss a Buyer',
@@ -135,18 +135,25 @@ export async function getPageData() {
   let services = defaultServices
   let pricingPlansData = defaultPricingPlans
 
-  try {
-    const dbSiteSettings = await getSiteSetting('siteSettings')
-    const dbHeroSection = await getSiteSetting('heroSection')
-    const dbServices = await getSiteSetting('services')
-    const dbPricingPlans = await getSiteSetting('pricingPlans')
+  // Check if database is initialized before querying
+  const dbInitialized = await isDatabaseInitialized()
 
-    if (dbSiteSettings) siteSettings = dbSiteSettings
-    if (dbHeroSection) heroSection = dbHeroSection
-    if (dbServices) services = dbServices
-    if (dbPricingPlans) pricingPlansData = dbPricingPlans
-  } catch (error) {
-    console.log('Using default data, database not available:', error)
+  if (dbInitialized) {
+    try {
+      const dbSiteSettings = await getSiteSetting('siteSettings')
+      const dbHeroSection = await getSiteSetting('heroSection')
+      const dbServices = await getSiteSetting('services')
+      const dbPricingPlans = await getSiteSetting('pricingPlans')
+
+      if (dbSiteSettings) siteSettings = dbSiteSettings
+      if (dbHeroSection) heroSection = dbHeroSection
+      if (dbServices) services = dbServices
+      if (dbPricingPlans) pricingPlansData = dbPricingPlans
+    } catch (error) {
+      console.log('Error fetching from database, using defaults:', error)
+    }
+  } else {
+    console.log('Database not initialized, using default data')
   }
 
   const footerServices = services.filter((s: any) => s.showInFooter)
