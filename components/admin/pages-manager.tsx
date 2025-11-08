@@ -105,12 +105,32 @@ export function PagesManager() {
           <h2 className="text-2xl font-bold">Pages</h2>
           <p className="text-sm text-gray-600">Manage all your website pages</p>
         </div>
-        <Link href="/admin/pages/new">
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
-            New Page
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={async () => {
+              try {
+                const response = await fetch('/api/pages/import', { method: 'POST' })
+                if (response.ok) {
+                  toast.success('Privacy & Terms pages imported!')
+                  loadPages()
+                } else {
+                  toast.error('Failed to import pages')
+                }
+              } catch (error) {
+                toast.error('Failed to import pages')
+              }
+            }}
+          >
+            Import Privacy & Terms
           </Button>
-        </Link>
+          <Link href="/admin/pages/new">
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              New Page
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <Card>
