@@ -98,7 +98,9 @@ export const defaultNavigation = {
     { name: 'Case Studies', href: '#testimonials' },
   ],
   callButtonText: 'Call Us',
+  callButtonUrl: 'tel:+1234567890',
   quoteButtonText: 'Get Quote',
+  quoteButtonUrl: '#contact',
 }
 
 export const defaultFooterNav = {

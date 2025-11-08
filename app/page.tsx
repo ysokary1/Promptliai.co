@@ -44,7 +44,7 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen bg-black">
       {/* Navigation Component */}
-      <Navbar />
+      <Navbar navigation={navigation} />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">

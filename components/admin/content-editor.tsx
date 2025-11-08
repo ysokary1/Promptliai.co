@@ -366,11 +366,31 @@ export function ContentEditor({ section }: ContentEditorProps) {
               />
             </div>
             <div className="space-y-2">
+              <Label htmlFor="callUrl">Call Button URL</Label>
+              <Input
+                id="callUrl"
+                value={data.callButtonUrl || ''}
+                onChange={(e) => updateField('callButtonUrl', e.target.value)}
+                placeholder="tel:+1234567890 or #contact"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
               <Label htmlFor="quoteBtn">Quote Button Text</Label>
               <Input
                 id="quoteBtn"
                 value={data.quoteButtonText || ''}
                 onChange={(e) => updateField('quoteButtonText', e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="quoteUrl">Quote Button URL</Label>
+              <Input
+                id="quoteUrl"
+                value={data.quoteButtonUrl || ''}
+                onChange={(e) => updateField('quoteButtonUrl', e.target.value)}
+                placeholder="#contact or /contact"
               />
             </div>
           </div>

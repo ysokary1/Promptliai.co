@@ -18,10 +18,34 @@ const AnimatedNavLink = ({ href, children }: { href: string; children: React.Rea
   )
 }
 
-export function Navbar() {
+interface NavbarProps {
+  navigation?: {
+    logo?: string
+    links?: Array<{ name: string; href: string }>
+    callButtonText?: string
+    callButtonUrl?: string
+    quoteButtonText?: string
+    quoteButtonUrl?: string
+  }
+}
+
+export function Navbar({ navigation }: NavbarProps = {}) {
   const [isOpen, setIsOpen] = useState(false)
   const [headerShapeClass, setHeaderShapeClass] = useState("rounded-full")
   const shapeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Use provided navigation or defaults
+  const navData = navigation || {
+    logo: 'Promptli AI',
+    links: [
+      { name: 'Services', href: '#services' },
+      { name: 'Case Studies', href: '#testimonials' },
+    ],
+    callButtonText: 'Call Us',
+    callButtonUrl: 'tel:+447917066682',
+    quoteButtonText: 'Get Quote',
+    quoteButtonUrl: '#contact',
+  }
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
@@ -58,14 +82,11 @@ export function Navbar() {
     </div>
   )
 
-  const navLinksData = [
-    { label: "Services", href: "#services" },
-    { label: "Case Studies", href: "#testimonials" },
-  ]
+  const navLinksData = navData.links || []
 
   const loginButtonElement = (
-    <a href="tel:+447917066682" className="px-4 py-2 sm:px-3 text-xs sm:text-sm border border-[#333] bg-[rgba(31,31,31,0.62)] text-gray-300 rounded-full hover:border-white/50 hover:text-white transition-colors duration-200 w-full sm:w-auto text-center">
-      Call Us
+    <a href={navData.callButtonUrl} className="px-4 py-2 sm:px-3 text-xs sm:text-sm border border-[#333] bg-[rgba(31,31,31,0.62)] text-gray-300 rounded-full hover:border-white/50 hover:text-white transition-colors duration-200 w-full sm:w-auto text-center">
+      {navData.callButtonText}
     </a>
   )
 
@@ -79,9 +100,9 @@ export function Navbar() {
                      transition-all duration-300 ease-out
                      group-hover:opacity-60 group-hover:blur-xl group-hover:-m-3"
       ></div>
-      <button className="relative z-10 px-4 py-2 sm:px-3 text-xs sm:text-sm font-semibold text-white bg-gradient-to-br from-blue-400 to-blue-600 rounded-full hover:from-blue-500 hover:to-blue-700 transition-all duration-200 w-full sm:w-auto">
-        Get Quote
-      </button>
+      <a href={navData.quoteButtonUrl} className="relative z-10 px-4 py-2 sm:px-3 text-xs sm:text-sm font-semibold text-white bg-gradient-to-br from-blue-400 to-blue-600 rounded-full hover:from-blue-500 hover:to-blue-700 transition-all duration-200 w-full sm:w-auto block text-center">
+        {navData.quoteButtonText}
+      </a>
     </div>
   )
 
@@ -101,7 +122,7 @@ export function Navbar() {
         <nav className="hidden sm:flex items-center space-x-4 sm:space-x-6 text-sm">
           {navLinksData.map((link) => (
             <AnimatedNavLink key={link.href} href={link.href}>
-              {link.label}
+              {link.name}
             </AnimatedNavLink>
           ))}
         </nav>
@@ -156,7 +177,7 @@ export function Navbar() {
               href={link.href}
               className="text-gray-300 hover:text-white transition-colors w-full text-center"
             >
-              {link.label}
+              {link.name}
             </a>
           ))}
         </nav>

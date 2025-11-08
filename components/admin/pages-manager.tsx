@@ -12,13 +12,7 @@ import {
   TableRow
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { MoreHorizontal, Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react'
+import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
 
@@ -170,50 +164,39 @@ export function PagesManager() {
                       {new Date(page.updated_at).toLocaleDateString()}
                     </TableCell>
                     <TableCell className="text-right">
-                      <DropdownMenu modal={false}>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm">
-                            <MoreHorizontal className="h-4 w-4" />
-                            <span className="sr-only">Open menu</span>
+                      <div className="flex items-center justify-end gap-1">
+                        <Link href={`/admin/pages/edit/${page.slug}`}>
+                          <Button variant="ghost" size="sm" title="Edit">
+                            <Edit className="h-4 w-4" />
                           </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-48">
-                          <DropdownMenuItem asChild>
-                            <Link href={`/admin/pages/edit/${page.slug}`}>
-                              <Edit className="h-4 w-4 mr-2" />
-                              Edit
-                            </Link>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem asChild>
-                            <a href={`/${page.slug}`} target="_blank" rel="noopener noreferrer">
-                              <Eye className="h-4 w-4 mr-2" />
-                              View
-                            </a>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => togglePublish(page.slug, page.is_published)}
-                          >
-                            {page.is_published ? (
-                              <>
-                                <EyeOff className="h-4 w-4 mr-2" />
-                                Unpublish
-                              </>
-                            ) : (
-                              <>
-                                <Eye className="h-4 w-4 mr-2" />
-                                Publish
-                              </>
-                            )}
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => deletePage(page.slug)}
-                            className="text-red-600"
-                          >
-                            <Trash className="h-4 w-4 mr-2" />
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                        </Link>
+                        <a href={`/${page.slug}`} target="_blank" rel="noopener noreferrer">
+                          <Button variant="ghost" size="sm" title="View">
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                        </a>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => togglePublish(page.slug, page.is_published)}
+                          title={page.is_published ? 'Unpublish' : 'Publish'}
+                        >
+                          {page.is_published ? (
+                            <EyeOff className="h-4 w-4" />
+                          ) : (
+                            <Eye className="h-4 w-4 text-green-600" />
+                          )}
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => deletePage(page.slug)}
+                          title="Delete"
+                          className="text-red-600 hover:text-red-700"
+                        >
+                          <Trash className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))
