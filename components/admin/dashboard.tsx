@@ -84,9 +84,13 @@ export function AdminDashboard() {
       {/* Main Content */}
       <div className="p-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="grid w-full grid-cols-5 lg:w-[750px]">
+          <TabsList className="grid w-full grid-cols-9 lg:w-full max-w-6xl">
             <TabsTrigger value="pages">Pages</TabsTrigger>
-            <TabsTrigger value="hero">Hero Section</TabsTrigger>
+            <TabsTrigger value="hero">Hero</TabsTrigger>
+            <TabsTrigger value="problemSolution">Problem/Solution</TabsTrigger>
+            <TabsTrigger value="benefits">Benefits</TabsTrigger>
+            <TabsTrigger value="process">Process</TabsTrigger>
+            <TabsTrigger value="cta">CTA</TabsTrigger>
             <TabsTrigger value="services">Services</TabsTrigger>
             <TabsTrigger value="pricing">Pricing</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
@@ -106,6 +110,62 @@ export function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <ContentEditor section="hero" />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="problemSolution">
+            <Card>
+              <CardHeader>
+                <CardTitle>Problem & Solution Section</CardTitle>
+                <CardDescription>
+                  Edit the problems and solutions on your homepage
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ContentEditor section="problemSolution" />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="benefits">
+            <Card>
+              <CardHeader>
+                <CardTitle>Benefits Section</CardTitle>
+                <CardDescription>
+                  Edit the measurable results stats
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ContentEditor section="benefits" />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="process">
+            <Card>
+              <CardHeader>
+                <CardTitle>Process Section</CardTitle>
+                <CardDescription>
+                  Edit the 3-step process on your homepage
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ContentEditor section="process" />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="cta">
+            <Card>
+              <CardHeader>
+                <CardTitle>Call-to-Action Section</CardTitle>
+                <CardDescription>
+                  Edit the CTA at the bottom of your homepage
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ContentEditor section="cta" />
               </CardContent>
             </Card>
           </TabsContent>

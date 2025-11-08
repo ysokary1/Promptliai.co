@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
 
 interface ContentEditorProps {
-  section: 'hero' | 'services' | 'pricing' | 'settings'
+  section: 'hero' | 'problemSolution' | 'benefits' | 'process' | 'cta' | 'services' | 'pricing' | 'settings'
 }
 
 export function ContentEditor({ section }: ContentEditorProps) {
@@ -122,6 +122,156 @@ export function ContentEditor({ section }: ContentEditorProps) {
                 id="badge2"
                 value={data.badge2 || ''}
                 onChange={(e) => updateField('badge2', e.target.value)}
+              />
+            </div>
+          </div>
+        </>
+      )}
+
+      {section === 'problemSolution' && (
+        <>
+          <div className="space-y-2">
+            <Label htmlFor="problemHeading">Problem Section Heading</Label>
+            <Input
+              id="problemHeading"
+              value={data.problemHeading || ''}
+              onChange={(e) => updateField('problemHeading', e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Problems (one per line)</Label>
+            <Textarea
+              value={data.problems?.join('\n') || ''}
+              onChange={(e) => updateField('problems', e.target.value.split('\n').filter((p: string) => p.trim()))}
+              rows={6}
+              placeholder="Each problem on a new line..."
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="solutionHeading">Solution Section Heading</Label>
+            <Input
+              id="solutionHeading"
+              value={data.solutionHeading || ''}
+              onChange={(e) => updateField('solutionHeading', e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Solutions (one per line)</Label>
+            <Textarea
+              value={data.solutions?.join('\n') || ''}
+              onChange={(e) => updateField('solutions', e.target.value.split('\n').filter((s: string) => s.trim()))}
+              rows={6}
+              placeholder="Each solution on a new line..."
+            />
+          </div>
+        </>
+      )}
+
+      {section === 'benefits' && (
+        <>
+          <div className="space-y-2">
+            <Label htmlFor="benefitsHeading">Section Heading</Label>
+            <Input
+              id="benefitsHeading"
+              value={data.heading || ''}
+              onChange={(e) => updateField('heading', e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="benefitsSubheading">Subheading</Label>
+            <Input
+              id="benefitsSubheading"
+              value={data.subheading || ''}
+              onChange={(e) => updateField('subheading', e.target.value)}
+            />
+          </div>
+          <div className="space-y-4">
+            <Label>Benefit Stats (JSON editor - visual editor coming soon!)</Label>
+            <Textarea
+              value={JSON.stringify(data.stats || [], null, 2)}
+              onChange={(e) => {
+                try {
+                  const parsed = JSON.parse(e.target.value)
+                  updateField('stats', parsed)
+                } catch (err) {
+                  // Invalid JSON
+                }
+              }}
+              rows={10}
+              className="font-mono text-sm"
+            />
+            <p className="text-xs text-gray-500">
+              Format: [{`{"value": "80%", "label": "Time Saved", "icon": "clock"}`}, ...]
+            </p>
+          </div>
+        </>
+      )}
+
+      {section === 'process' && (
+        <>
+          <div className="space-y-2">
+            <Label htmlFor="processHeading">Section Heading</Label>
+            <Input
+              id="processHeading"
+              value={data.heading || ''}
+              onChange={(e) => updateField('heading', e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="processSubheading">Subheading</Label>
+            <Input
+              id="processSubheading"
+              value={data.subheading || ''}
+              onChange={(e) => updateField('subheading', e.target.value)}
+            />
+          </div>
+          <div className="space-y-4">
+            <Label>Process Steps (JSON editor - visual editor coming soon!)</Label>
+            <Textarea
+              value={JSON.stringify(data.steps || [], null, 2)}
+              onChange={(e) => {
+                try {
+                  const parsed = JSON.parse(e.target.value)
+                  updateField('steps', parsed)
+                } catch (err) {
+                  // Invalid JSON
+                }
+              }}
+              rows={12}
+              className="font-mono text-sm"
+            />
+            <p className="text-xs text-gray-500">
+              Format: [{`{"number": 1, "title": "Step Title", "description": "Description..."}`}, ...]
+            </p>
+          </div>
+        </>
+      )}
+
+      {section === 'cta' && (
+        <>
+          <div className="space-y-2">
+            <Label htmlFor="ctaHeading">CTA Heading</Label>
+            <Input
+              id="ctaHeading"
+              value={data.heading || ''}
+              onChange={(e) => updateField('heading', e.target.value)}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="ctaPrimaryBtn">Primary Button Text</Label>
+              <Input
+                id="ctaPrimaryBtn"
+                value={data.primaryButtonText || ''}
+                onChange={(e) => updateField('primaryButtonText', e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="ctaSecondaryBtn">Secondary Button Text</Label>
+              <Input
+                id="ctaSecondaryBtn"
+                value={data.secondaryButtonText || ''}
+                onChange={(e) => updateField('secondaryButtonText', e.target.value)}
               />
             </div>
           </div>
