@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
 
 interface ContentEditorProps {
-  section: 'hero' | 'problemSolution' | 'benefits' | 'process' | 'cta' | 'services' | 'pricing' | 'settings'
+  section: 'hero' | 'problemSolution' | 'benefits' | 'process' | 'cta' | 'services' | 'pricing' | 'settings' | 'navigation' | 'footer'
 }
 
 export function ContentEditor({ section }: ContentEditorProps) {
@@ -344,6 +344,78 @@ export function ContentEditor({ section }: ContentEditorProps) {
             />
           </div>
         </>
+      )}
+
+      {section === 'navigation' && (
+        <>
+          <div className="space-y-2">
+            <Label htmlFor="logo">Logo Text</Label>
+            <Input
+              id="logo"
+              value={data.logo || ''}
+              onChange={(e) => updateField('logo', e.target.value)}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="callBtn">Call Button Text</Label>
+              <Input
+                id="callBtn"
+                value={data.callButtonText || ''}
+                onChange={(e) => updateField('callButtonText', e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="quoteBtn">Quote Button Text</Label>
+              <Input
+                id="quoteBtn"
+                value={data.quoteButtonText || ''}
+                onChange={(e) => updateField('quoteButtonText', e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="space-y-4">
+            <Label>Navigation Links (JSON editor)</Label>
+            <Textarea
+              value={JSON.stringify(data.links || [], null, 2)}
+              onChange={(e) => {
+                try {
+                  const parsed = JSON.parse(e.target.value)
+                  updateField('links', parsed)
+                } catch (err) {
+                  // Invalid JSON
+                }
+              }}
+              rows={8}
+              className="font-mono text-sm"
+            />
+            <p className="text-xs text-gray-500">
+              Format: [{`{"name": "Services", "href": "#services"}`}, ...]
+            </p>
+          </div>
+        </>
+      )}
+
+      {section === 'footer' && (
+        <div className="space-y-4">
+          <Label>Company Links (JSON editor)</Label>
+          <Textarea
+            value={JSON.stringify(data.companyLinks || [], null, 2)}
+            onChange={(e) => {
+              try {
+                const parsed = JSON.parse(e.target.value)
+                updateField('companyLinks', parsed)
+              } catch (err) {
+                // Invalid JSON
+              }
+            }}
+            rows={10}
+            className="font-mono text-sm"
+          />
+          <p className="text-xs text-gray-500">
+            Format: [{`{"name": "About Us", "href": "#about"}`}, ...]
+          </p>
+        </div>
       )}
 
       {(section === 'services' || section === 'pricing') && (

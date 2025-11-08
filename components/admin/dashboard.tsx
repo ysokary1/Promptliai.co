@@ -84,15 +84,17 @@ export function AdminDashboard() {
       {/* Main Content */}
       <div className="p-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="grid w-full grid-cols-9 lg:w-full max-w-6xl">
+          <TabsList className="grid w-full grid-cols-11 lg:w-full max-w-6xl">
             <TabsTrigger value="pages">Pages</TabsTrigger>
             <TabsTrigger value="hero">Hero</TabsTrigger>
-            <TabsTrigger value="problemSolution">Problem/Solution</TabsTrigger>
+            <TabsTrigger value="problemSolution">Problem</TabsTrigger>
+            <TabsTrigger value="services">Services</TabsTrigger>
             <TabsTrigger value="benefits">Benefits</TabsTrigger>
+            <TabsTrigger value="pricing">Pricing</TabsTrigger>
             <TabsTrigger value="process">Process</TabsTrigger>
             <TabsTrigger value="cta">CTA</TabsTrigger>
-            <TabsTrigger value="services">Services</TabsTrigger>
-            <TabsTrigger value="pricing">Pricing</TabsTrigger>
+            <TabsTrigger value="navigation">Nav</TabsTrigger>
+            <TabsTrigger value="footer">Footer</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
 
@@ -190,6 +192,34 @@ export function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <ContentEditor section="pricing" />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="navigation">
+            <Card>
+              <CardHeader>
+                <CardTitle>Navigation</CardTitle>
+                <CardDescription>
+                  Edit your site navigation and header
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ContentEditor section="navigation" />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="footer">
+            <Card>
+              <CardHeader>
+                <CardTitle>Footer Navigation</CardTitle>
+                <CardDescription>
+                  Edit footer company links and content
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ContentEditor section="footer" />
               </CardContent>
             </Card>
           </TabsContent>

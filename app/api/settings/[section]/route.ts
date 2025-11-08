@@ -26,6 +26,7 @@ const sectionKeyMap: Record<string, string> = {
   process: 'process',
   cta: 'ctaSection',
   navigation: 'navigation',
+  footer: 'footerNav',
   footerNav: 'footerNav',
   pricing: 'pricingPlans',
   settings: 'siteSettings',

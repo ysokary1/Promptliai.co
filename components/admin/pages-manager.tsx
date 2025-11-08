@@ -170,13 +170,14 @@ export function PagesManager() {
                       {new Date(page.updated_at).toLocaleDateString()}
                     </TableCell>
                     <TableCell className="text-right">
-                      <DropdownMenu>
+                      <DropdownMenu modal={false}>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="sm">
                             <MoreHorizontal className="h-4 w-4" />
+                            <span className="sr-only">Open menu</span>
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                        <DropdownMenuContent align="end" className="w-48">
                           <DropdownMenuItem asChild>
                             <Link href={`/admin/pages/edit/${page.slug}`}>
                               <Edit className="h-4 w-4 mr-2" />
