@@ -27,7 +27,20 @@ import {
 import { getPageData } from "@/lib/data"
 
 export default async function HomePage() {
-  const { siteSettings, heroSection, services, footerServices, pricingPlans } = await getPageData()
+  const {
+    siteSettings,
+    heroSection,
+    problemSolution,
+    servicesSection,
+    services,
+    footerServices,
+    benefits,
+    process,
+    ctaSection,
+    navigation,
+    footerNav,
+    pricingPlans
+  } = await getPageData()
   return (
     <div className="min-h-screen bg-black">
       {/* Navigation Component */}
@@ -94,46 +107,26 @@ export default async function HomePage() {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">Still Managing Everything Manually?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">{problemSolution.problemHeading}</h2>
               <div className="space-y-4 text-gray-300">
-                <p className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  Spending hours on repetitive tasks that could be automated
-                </p>
-                <p className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  Missing leads because you can't respond to inquiries 24/7
-                </p>
-                <p className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  Struggling to scale operations without hiring more staff
-                </p>
-                <p className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">✗</span>
-                  Losing competitive edge to AI-powered competitors
-                </p>
+                {problemSolution.problems.map((problem, index) => (
+                  <p key={index} className="flex items-start gap-3">
+                    <span className="text-red-500 mt-1">✗</span>
+                    {problem}
+                  </p>
+                ))}
               </div>
             </div>
 
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-white">We Build AI Solutions That Work</h3>
+              <h3 className="text-2xl font-bold text-white">{problemSolution.solutionHeading}</h3>
               <div className="space-y-4 text-gray-300">
-                <p className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  Custom AI agents that handle customer inquiries instantly
-                </p>
-                <p className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  Workflow automation that saves 20+ hours per week
-                </p>
-                <p className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  Seamless integration with your existing tools and systems
-                </p>
-                <p className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  Proven ROI within 30 days of implementation
-                </p>
+                {problemSolution.solutions.map((solution, index) => (
+                  <p key={index} className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                    {solution}
+                  </p>
+                ))}
               </div>
             </div>
           </div>
@@ -144,9 +137,9 @@ export default async function HomePage() {
       <section id="services" className="py-24 bg-black">
         <div className="container mx-auto px-4">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Our AI Solutions</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">{servicesSection.heading}</h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Comprehensive AI services designed to transform your business operations
+              {servicesSection.subheading}
             </p>
           </div>
 
@@ -245,44 +238,28 @@ export default async function HomePage() {
       <section className="py-24 bg-black">
         <div className="container mx-auto px-4">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Measurable Results That Matter</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">{benefits.heading}</h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Our clients see immediate impact on their bottom line
+              {benefits.subheading}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center space-y-4">
-              <div className="h-16 w-16 bg-green-900/40 rounded-full flex items-center justify-center mx-auto">
-                <Clock className="h-8 w-8 text-green-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">80%</h3>
-              <p className="text-gray-300">Time Saved on Manual Tasks</p>
-            </div>
+            {benefits.stats.map((stat, index) => {
+              const Icon = stat.icon === 'clock' ? Clock : stat.icon === 'dollar' ? DollarSign : stat.icon === 'chart' ? BarChart3 : TrendingUp
+              const bgColor = index === 0 ? 'bg-green-900/40' : index === 1 ? 'bg-blue-900/40' : index === 2 ? 'bg-purple-900/40' : 'bg-orange-900/40'
+              const iconColor = index === 0 ? 'text-green-400' : index === 1 ? 'text-blue-400' : index === 2 ? 'text-purple-400' : 'text-orange-400'
 
-            <div className="text-center space-y-4">
-              <div className="h-16 w-16 bg-blue-900/40 rounded-full flex items-center justify-center mx-auto">
-                <DollarSign className="h-8 w-8 text-blue-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">300%</h3>
-              <p className="text-gray-300">Average ROI Within 6 Months</p>
-            </div>
-
-            <div className="text-center space-y-4">
-              <div className="h-16 w-16 bg-purple-900/40 rounded-full flex items-center justify-center mx-auto">
-                <BarChart3 className="h-8 w-8 text-purple-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">150%</h3>
-              <p className="text-gray-300">Increase in Lead Conversion</p>
-            </div>
-
-            <div className="text-center space-y-4">
-              <div className="h-16 w-16 bg-orange-900/40 rounded-full flex items-center justify-center mx-auto">
-                <TrendingUp className="h-8 w-8 text-orange-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">24/7</h3>
-              <p className="text-gray-300">Automated Customer Support</p>
-            </div>
+              return (
+                <div key={index} className="text-center space-y-4">
+                  <div className={`h-16 w-16 ${bgColor} rounded-full flex items-center justify-center mx-auto`}>
+                    <Icon className={`h-8 w-8 ${iconColor}`} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">{stat.value}</h3>
+                  <p className="text-gray-300">{stat.label}</p>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -302,42 +279,22 @@ export default async function HomePage() {
       <section className="py-24 bg-black">
         <div className="container mx-auto px-4">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Simple 3-Step Process</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">{process.heading}</h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              From consultation to implementation, we make AI adoption seamless
+              {process.subheading}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center space-y-6">
-              <div className="h-20 w-20 bg-white text-black rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
-                1
+            {process.steps.map((step) => (
+              <div key={step.number} className="text-center space-y-6">
+                <div className="h-20 w-20 bg-white text-black rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                  {step.number}
+                </div>
+                <h3 className="text-xl font-bold text-white">{step.title}</h3>
+                <p className="text-gray-300">{step.description}</p>
               </div>
-              <h3 className="text-xl font-bold text-white">Book a Call</h3>
-              <p className="text-gray-300">
-                Schedule a free consultation to discuss your business needs and identify automation opportunities
-              </p>
-            </div>
-
-            <div className="text-center space-y-6">
-              <div className="h-20 w-20 bg-white text-black rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
-                2
-              </div>
-              <h3 className="text-xl font-bold text-white">AI Strategy</h3>
-              <p className="text-gray-300">
-                We analyze your workflows and create a custom AI strategy tailored to your specific business goals
-              </p>
-            </div>
-
-            <div className="text-center space-y-6">
-              <div className="h-20 w-20 bg-white text-black rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
-                3
-              </div>
-              <h3 className="text-xl font-bold text-white">Implementation</h3>
-              <p className="text-gray-300">
-                Our team builds, tests, and deploys your AI solutions with ongoing support and optimization
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -365,19 +322,19 @@ export default async function HomePage() {
                 />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 relative z-20 text-balance">
-                Ready to cut costs with AI?
+                {ctaSection.heading}
               </h2>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" variant="secondary" className="bg-white text-black hover:bg-gray-100" asChild>
                 <a href={`mailto:${siteSettings.email}`}>
-                  {heroSection.primaryButtonText}
+                  {ctaSection.primaryButtonText}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 bg-transparent" asChild>
-                <a href={`tel:${siteSettings.phone}`}>Call {siteSettings.phone}</a>
+                <a href={`tel:${siteSettings.phone}`}>{ctaSection.secondaryButtonText} {siteSettings.phone}</a>
               </Button>
             </div>
           </div>
@@ -443,13 +400,7 @@ export default async function HomePage() {
             <div className="space-y-6">
               <h4 className="text-lg font-semibold text-white">Company</h4>
               <ul className="space-y-3">
-                {[
-                  { name: "About Us", href: "#" },
-                  { name: "Case Studies", href: "#testimonials" },
-                  { name: "Blog", href: "#" },
-                  { name: "Careers", href: "#" },
-                  { name: "Contact", href: "#contact" },
-                ].map((item) => (
+                {footerNav.companyLinks.map((item) => (
                   <li key={item.name}>
                     <a
                       href={item.href}

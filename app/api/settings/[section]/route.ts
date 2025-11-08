@@ -2,12 +2,31 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getSiteSetting, updateSiteSetting } from '@/lib/db'
-import { defaultSiteSettings, defaultHeroSection, defaultServices, defaultPricingPlans } from '@/lib/data'
+import {
+  defaultSiteSettings,
+  defaultHeroSection,
+  defaultProblemSolution,
+  defaultServicesSection,
+  defaultServices,
+  defaultBenefits,
+  defaultProcess,
+  defaultCTA,
+  defaultNavigation,
+  defaultFooterNav,
+  defaultPricingPlans
+} from '@/lib/data'
 
 // Map section names to setting keys
 const sectionKeyMap: Record<string, string> = {
   hero: 'heroSection',
+  problemSolution: 'problemSolution',
+  servicesSection: 'servicesSection',
   services: 'services',
+  benefits: 'benefits',
+  process: 'process',
+  cta: 'ctaSection',
+  navigation: 'navigation',
+  footerNav: 'footerNav',
   pricing: 'pricingPlans',
   settings: 'siteSettings',
 }
@@ -15,7 +34,14 @@ const sectionKeyMap: Record<string, string> = {
 // Default data for each section
 const defaultData: Record<string, any> = {
   heroSection: defaultHeroSection,
+  problemSolution: defaultProblemSolution,
+  servicesSection: defaultServicesSection,
   services: defaultServices,
+  benefits: defaultBenefits,
+  process: defaultProcess,
+  ctaSection: defaultCTA,
+  navigation: defaultNavigation,
+  footerNav: defaultFooterNav,
   pricingPlans: defaultPricingPlans,
   siteSettings: defaultSiteSettings,
 }

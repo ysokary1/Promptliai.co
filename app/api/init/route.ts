@@ -1,7 +1,19 @@
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { initDatabase, createUser, getUserByEmail, updateSiteSetting } from '@/lib/db'
-import { defaultSiteSettings, defaultHeroSection, defaultServices, defaultPricingPlans } from '@/lib/data'
+import {
+  defaultSiteSettings,
+  defaultHeroSection,
+  defaultProblemSolution,
+  defaultServicesSection,
+  defaultServices,
+  defaultBenefits,
+  defaultProcess,
+  defaultCTA,
+  defaultNavigation,
+  defaultFooterNav,
+  defaultPricingPlans
+} from '@/lib/data'
 
 export async function POST(request: Request) {
   try {
@@ -27,11 +39,20 @@ export async function POST(request: Request) {
       }
     }
 
-    // Initialize site settings
-    await updateSiteSetting('siteSettings', defaultSiteSettings)
-    await updateSiteSetting('heroSection', defaultHeroSection)
-    await updateSiteSetting('services', defaultServices)
-    await updateSiteSetting('pricingPlans', defaultPricingPlans)
+    // Initialize site settings and all sections
+    await Promise.all([
+      updateSiteSetting('siteSettings', defaultSiteSettings),
+      updateSiteSetting('heroSection', defaultHeroSection),
+      updateSiteSetting('problemSolution', defaultProblemSolution),
+      updateSiteSetting('servicesSection', defaultServicesSection),
+      updateSiteSetting('services', defaultServices),
+      updateSiteSetting('benefits', defaultBenefits),
+      updateSiteSetting('process', defaultProcess),
+      updateSiteSetting('ctaSection', defaultCTA),
+      updateSiteSetting('navigation', defaultNavigation),
+      updateSiteSetting('footerNav', defaultFooterNav),
+      updateSiteSetting('pricingPlans', defaultPricingPlans),
+    ])
 
     return NextResponse.json({
       message: 'Database initialized successfully',

@@ -30,6 +30,87 @@ export const defaultHeroSection = {
   badge2: '30-Day ROI Guarantee',
 }
 
+export const defaultProblemSolution = {
+  problemHeading: 'Still Managing Everything Manually?',
+  problems: [
+    'Spending hours on repetitive tasks that could be automated',
+    'Missing leads because you can\'t respond to inquiries 24/7',
+    'Struggling to scale operations without hiring more staff',
+    'Losing competitive edge to AI-powered competitors',
+  ],
+  solutionHeading: 'We Build AI Solutions That Work',
+  solutions: [
+    'Custom AI agents that handle customer inquiries instantly',
+    'Workflow automation that saves 20+ hours per week',
+    'Seamless integration with your existing tools and systems',
+    'Proven ROI within 30 days of implementation',
+  ],
+}
+
+export const defaultServicesSection = {
+  heading: 'Our AI Solutions',
+  subheading: 'Comprehensive AI services designed to transform your business operations',
+}
+
+export const defaultBenefits = {
+  heading: 'Measurable Results That Matter',
+  subheading: 'Our clients see immediate impact on their bottom line',
+  stats: [
+    { value: '80%', label: 'Time Saved on Manual Tasks', icon: 'clock' },
+    { value: '300%', label: 'Average ROI Within 6 Months', icon: 'dollar' },
+    { value: '150%', label: 'Increase in Lead Conversion', icon: 'chart' },
+    { value: '24/7', label: 'Automated Customer Support', icon: 'trending' },
+  ],
+}
+
+export const defaultProcess = {
+  heading: 'Simple 3-Step Process',
+  subheading: 'From consultation to implementation, we make AI adoption seamless',
+  steps: [
+    {
+      number: 1,
+      title: 'Book a Call',
+      description: 'Schedule a free consultation to discuss your business needs and identify automation opportunities',
+    },
+    {
+      number: 2,
+      title: 'AI Strategy',
+      description: 'We analyze your workflows and create a custom AI strategy tailored to your specific business goals',
+    },
+    {
+      number: 3,
+      title: 'Implementation',
+      description: 'Our team builds, tests, and deploys your AI solutions with ongoing support and optimization',
+    },
+  ],
+}
+
+export const defaultCTA = {
+  heading: 'Ready to cut costs with AI?',
+  primaryButtonText: 'Book Free Consultation',
+  secondaryButtonText: 'Call Now',
+}
+
+export const defaultNavigation = {
+  logo: 'Promptli AI',
+  links: [
+    { name: 'Services', href: '#services' },
+    { name: 'Case Studies', href: '#testimonials' },
+  ],
+  callButtonText: 'Call Us',
+  quoteButtonText: 'Get Quote',
+}
+
+export const defaultFooterNav = {
+  companyLinks: [
+    { name: 'About Us', href: '#' },
+    { name: 'Case Studies', href: '#testimonials' },
+    { name: 'Blog', href: '#' },
+    { name: 'Careers', href: '#' },
+    { name: 'Contact', href: '#contact' },
+  ],
+}
+
 export const defaultServices = [
   {
     _id: '1',
@@ -132,7 +213,14 @@ export async function getPageData() {
   // Fetch from database, fallback to defaults
   let siteSettings = defaultSiteSettings
   let heroSection = defaultHeroSection
+  let problemSolution = defaultProblemSolution
+  let servicesSection = defaultServicesSection
   let services = defaultServices
+  let benefits = defaultBenefits
+  let process = defaultProcess
+  let ctaSection = defaultCTA
+  let navigation = defaultNavigation
+  let footerNav = defaultFooterNav
   let pricingPlansData = defaultPricingPlans
 
   // Check if database is initialized before querying
@@ -140,14 +228,42 @@ export async function getPageData() {
 
   if (dbInitialized) {
     try {
-      const dbSiteSettings = await getSiteSetting('siteSettings')
-      const dbHeroSection = await getSiteSetting('heroSection')
-      const dbServices = await getSiteSetting('services')
-      const dbPricingPlans = await getSiteSetting('pricingPlans')
+      const [
+        dbSiteSettings,
+        dbHeroSection,
+        dbProblemSolution,
+        dbServicesSection,
+        dbServices,
+        dbBenefits,
+        dbProcess,
+        dbCTA,
+        dbNavigation,
+        dbFooterNav,
+        dbPricingPlans,
+      ] = await Promise.all([
+        getSiteSetting('siteSettings'),
+        getSiteSetting('heroSection'),
+        getSiteSetting('problemSolution'),
+        getSiteSetting('servicesSection'),
+        getSiteSetting('services'),
+        getSiteSetting('benefits'),
+        getSiteSetting('process'),
+        getSiteSetting('ctaSection'),
+        getSiteSetting('navigation'),
+        getSiteSetting('footerNav'),
+        getSiteSetting('pricingPlans'),
+      ])
 
       if (dbSiteSettings) siteSettings = dbSiteSettings
       if (dbHeroSection) heroSection = dbHeroSection
+      if (dbProblemSolution) problemSolution = dbProblemSolution
+      if (dbServicesSection) servicesSection = dbServicesSection
       if (dbServices) services = dbServices
+      if (dbBenefits) benefits = dbBenefits
+      if (dbProcess) process = dbProcess
+      if (dbCTA) ctaSection = dbCTA
+      if (dbNavigation) navigation = dbNavigation
+      if (dbFooterNav) footerNav = dbFooterNav
       if (dbPricingPlans) pricingPlansData = dbPricingPlans
     } catch (error) {
       console.log('Error fetching from database, using defaults:', error)
@@ -174,8 +290,15 @@ export async function getPageData() {
   return {
     siteSettings,
     heroSection,
+    problemSolution,
+    servicesSection,
     services,
     footerServices,
+    benefits,
+    process,
+    ctaSection,
+    navigation,
+    footerNav,
     pricingPlans,
   }
 }
